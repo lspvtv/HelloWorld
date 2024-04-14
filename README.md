@@ -1,2 +1,2 @@
-# Hello world
-This is repository for OTUS course.
+# WorkWithData
+This is the third task from OTUS course.

@@ -1,4 +1,4 @@
-#!/home/poveteva/PycharmProjects/HelloWorld/venv/bin/python
+#!/home/olesya2/PycharmProjects/OtusCourse/venv/bin/python3
 # -*- coding: utf-8 -*-
 import re
 import sys
