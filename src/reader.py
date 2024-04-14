@@ -11,30 +11,40 @@ users_file = get_path('users.json')
 with open(users_file, 'r') as f:
     users = json.load(f)
 
-# Считываем количество книг и пользователей
-num_books = len(books)
-num_users = len(users)
+inform_users = []
+for person in range(len(users)):
+    in_user = {
+        "name": users[person]["name"],
+        "gender": users[person]["gender"],
+        "address": users[person]["address"],
+        "age": users[person]["age"],
+        "books": []
+    }
+    inform_users.append(in_user)
 
-# Рассчитываем сколько книг достанется каждому
-books_per_user = num_books // num_users
-remainder = num_books % num_users
+short_books = []
+for book in range(len(books)):
+    about_book = {
+        "Title": books[book]["Title"],
+        "Author": books[book]["Author"],
+        "Pages": books[book]["Pages"],
+        "Genre": books[book]["Genre"]
+    }
+    short_books.append(about_book)
 
-result = []
+books_count = len(short_books) // len(inform_users)
+residuals = len(short_books) % len(inform_users)
 book_index = 0
-for user in users:
-    user['books'] = []
-
-    for i in range(books_per_user):
-        user['books'].append(books[book_index])
+for user in range(len(inform_users)):
+    user_books = short_books[book_index:book_index + books_count]
+    if residuals > 0:
+        user_books.append(short_books[book_index + books_count])
+        residuals -= 1
         book_index += 1
 
-    if remainder > 0:
-        user['books'].append(books[book_index])
-        remainder -= 1
-        book_index += 1
-
-    result.append(user)
+    inform_users[user]["books"] = user_books
+    book_index += books_count
 
 # Записываем результат в JSON файл
 with open(get_path('result.json'), 'w') as f:
-    json.dump(result, f, indent=4)
+    json.dump(inform_users, f, indent=4)
